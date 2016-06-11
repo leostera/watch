@@ -1,64 +1,33 @@
 package main
 
 import (
-  "bytes"
   "fmt"
-  "io"
+  "strings"
   "log"
   "os"
   "os/exec"
   "time"
-
-  tm "github.com/buger/goterm"
 )
 
 func main() {
-  command := os.Args[1:]
-
-  tm.Clear()
-  tm.MoveCursor(0,0)
-
-  loop(1*time.Second, func() {
-
-    output, err := run(command)
-    safe(err)
-
-    render(output)
-
+  command := buildCommand(os.Args[1:])
+  loop(1 * time.Second, func () {
+    run(command)
   })
 }
 
-func run(command []string) (bytes.Buffer, error) {
-  name := command[0]
-  args := command[1:]
-  cmd  := exec.Command(name, args...)
-
-  cmdPipe, err := cmd.StdoutPipe()
-  if err != nil {
-    return bytes.Buffer{}, err;
-  }
-
-  if err := cmd.Start(); err != nil {
-    return bytes.Buffer{}, err;
-  }
-
-  pipeReader, pipeWriter := io.Pipe()
-
-  go func() {
-    _, err := io.Copy(pipeWriter, cmdPipe)
-    // fixme: return error through a channel
-    safe(err)
-    pipeWriter.Close()
-  } ()
-
-  var buf bytes.Buffer
-  _, err2 := io.Copy(&buf, pipeReader)
-  safe(err2)
-
-  return buf, nil
+func buildCommand(args []string) []string {
+  cmd := fmt.Sprintf(`"%s"`, strings.Join(args, " "))
+  return []string { "-c", cmd }
 }
 
-func l (s string) { fmt.Println(s) }
+func run(command []string) {
+  fmt.Println(command)
+  cmd := exec.Command("/bin/sh", command...)
+  cmd.Stdout = os.Stdout
+  cmd.Stderr = os.Stderr
+  cmd.Run()
+}
 
 func safe(err error) {
   if err != nil {
@@ -66,13 +35,10 @@ func safe(err error) {
   }
 }
 
-func render(output bytes.Buffer) {
-  tm.Println(output.String())
-  tm.Flush()
-}
-
 func loop(d time.Duration, fn func()) {
-  time.After(d)
-  fn()
-  loop(d, fn)
+  select {
+  case <- time.After(d):
+    fn()
+    loop(d, fn)
+  }
 }
