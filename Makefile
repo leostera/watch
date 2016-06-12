@@ -1,4 +1,4 @@
-.PHONY: all test run build
+.PHONY: all test build
 
 GO = $(shell which go)
 
