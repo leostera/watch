@@ -14,7 +14,6 @@ func main() {
   command := os.Args[1:]
   loop(1 * time.Second, func () {
     reset()
-    info(command)
     run(command)
   })
 }
@@ -46,7 +45,19 @@ func buildArgs(command []string) string {
 }
 
 func wrapForShell(command string) []string {
-  return append([]string {"-c"}, fmt.Sprintf("eval %s", command))
+  return append([]string {"-c"}, fmt.Sprintf("%s; eval %s", sourceFiles(), command))
+}
+
+func sourceFiles() string {
+  return fmt.Sprintf("%s %s", getShellSourceCmd(), getSourceFilePath())
+}
+
+func getSourceFilePath() string {
+  return "~/.zshrc"
+}
+
+func getShellSourceCmd() string {
+  return "."
 }
 
 func getShell() string {
