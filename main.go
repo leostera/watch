@@ -14,16 +14,16 @@ func main() {
   command := os.Args[1:]
   loop(1 * time.Second, func () {
     reset()
-    run(command)
+    run(measure(command))
   })
 }
 
 func reset() {
-  run([]string { "clear "})
+  run([]string {"clear"})
 }
 
-func info(command []string) {
-  fmt.Println("Running:", buildArgs(command), "\n")
+func measure(command []string) []string {
+  return append([]string {"time"}, command...)
 }
 
 func run(command []string) {
