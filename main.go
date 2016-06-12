@@ -2,28 +2,23 @@ package main
 
 import (
   "fmt"
-  "strings"
   "log"
   "os"
   "os/exec"
   "time"
+  "syscall"
 )
 
 func main() {
-  command := buildCommand(os.Args[1:])
+  command := os.Args[1:]
   loop(1 * time.Second, func () {
     run(command)
   })
 }
 
-func buildCommand(args []string) []string {
-  cmd := fmt.Sprintf(`"%s"`, strings.Join(args, " "))
-  return []string { "-c", cmd }
-}
-
 func run(command []string) {
-  fmt.Println(command)
-  cmd := exec.Command("/bin/sh", command...)
+  cmd := exec.Command(getShell(), buildArgs(command)...)
+  fmt.Println(cmd.Args)
   cmd.Stdout = os.Stdout
   cmd.Stderr = os.Stderr
   cmd.Run()
@@ -33,6 +28,18 @@ func safe(err error) {
   if err != nil {
     log.Fatal(err)
   }
+}
+
+func buildArgs(command []string) []string {
+  return append([]string {"-c"}, command...)
+}
+
+func getShell() string {
+  bin, found := syscall.Getenv("SHELL")
+  if found == false {
+    bin, _ = exec.LookPath("sh")
+  }
+  return bin
 }
 
 func loop(d time.Duration, fn func()) {
