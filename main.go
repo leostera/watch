@@ -14,14 +14,14 @@ import (
 const VERSION="v0.0.1"
 
 func main() {
-  var interval int
-  flag.IntVar(&interval, "i", 1, "interval")
+  var interval float64
+  flag.Float64Var(&interval, "i", 1.0, "Interval to wait between executions in seconds")
 
   var interrupt bool
-  flag.BoolVar(&interrupt, "x", false, "interrupt")
+  flag.BoolVar(&interrupt, "x", false, "Exit and elevate status code if the command fails")
 
   var version bool
-  flag.BoolVar(&version, "v", false, "version")
+  flag.BoolVar(&version, "v", false, "Print out version")
 
   flag.Parse()
 
@@ -32,6 +32,10 @@ func main() {
 
   command := flag.Args()
 
+  if len(command) == 0 {
+    os.Exit(0)
+  }
+
   loop(intervalToTime(interval), func () {
     reset()
     status := run(measure(command))
@@ -41,7 +45,7 @@ func main() {
   })
 }
 
-func intervalToTime(i int) time.Duration {
+func intervalToTime(i float64) time.Duration {
   return time.Duration(i) * time.Second
 }
 
