@@ -3,6 +3,7 @@ package main
 import (
   "fmt"
   "log"
+  "flag"
   "os"
   "os/exec"
   "time"
@@ -11,14 +12,27 @@ import (
 )
 
 func main() {
-  command := os.Args[1:]
-  loop(1 * time.Second, func () {
+  var interval int
+  flag.IntVar(&interval, "i", 1, "interval")
+
+  var interrupt bool
+  flag.BoolVar(&interrupt, "x", false, "interrupt")
+
+  flag.Parse()
+
+  command := flag.Args()
+
+  loop(intervalToTime(interval), func () {
     reset()
     status := run(measure(command))
-    if(status != 0) {
+    if(interrupt && status != 0) {
       os.Exit(status)
     }
   })
+}
+
+func intervalToTime(i int) time.Duration {
+  return time.Duration(i) * time.Second
 }
 
 func reset() {
@@ -74,9 +88,9 @@ func getShell() string {
 }
 
 func loop(d time.Duration, fn func()) {
+  fn()
   select {
   case <- time.After(d):
-    fn()
     loop(d, fn)
   }
 }
