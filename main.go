@@ -7,18 +7,28 @@ import (
   "os/exec"
   "time"
   "syscall"
+  "strings"
 )
 
 func main() {
   command := os.Args[1:]
   loop(1 * time.Second, func () {
+    reset()
+    info(command)
     run(command)
   })
 }
 
+func reset() {
+  run([]string { "clear "})
+}
+
+func info(command []string) {
+  fmt.Println("Running:", buildArgs(command), "\n")
+}
+
 func run(command []string) {
-  cmd := exec.Command(getShell(), buildArgs(command)...)
-  fmt.Println(cmd.Args)
+  cmd := exec.Command(getShell(), wrapForShell(buildArgs(command))...)
   cmd.Stdout = os.Stdout
   cmd.Stderr = os.Stderr
   cmd.Run()
@@ -30,8 +40,12 @@ func safe(err error) {
   }
 }
 
-func buildArgs(command []string) []string {
-  return append([]string {"-c"}, command...)
+func buildArgs(command []string) string {
+  return strings.Join(command, " ")
+}
+
+func wrapForShell(command string) []string {
+  return append([]string {"-c"}, fmt.Sprintf("eval %s", command))
 }
 
 func getShell() string {
