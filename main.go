@@ -29,6 +29,7 @@ func info(command []string) {
 
 func run(command []string) {
   cmd := exec.Command(getShell(), wrapForShell(buildArgs(command))...)
+  cmd.Env = os.Environ()
   cmd.Stdout = os.Stdout
   cmd.Stderr = os.Stderr
   cmd.Run()
