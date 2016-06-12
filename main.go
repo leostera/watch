@@ -14,7 +14,10 @@ func main() {
   command := os.Args[1:]
   loop(1 * time.Second, func () {
     reset()
-    run(measure(command))
+    status := run(measure(command))
+    if(status != 0) {
+      os.Exit(status)
+    }
   })
 }
 
@@ -26,12 +29,14 @@ func measure(command []string) []string {
   return append([]string {"time"}, command...)
 }
 
-func run(command []string) {
+func run(command []string) int {
   cmd := exec.Command(getShell(), wrapForShell(buildArgs(command))...)
   cmd.Env = os.Environ()
   cmd.Stdout = os.Stdout
   cmd.Stderr = os.Stderr
   cmd.Run()
+  status, _ := cmd.ProcessState.Sys().(syscall.WaitStatus)
+  return status.ExitStatus()
 }
 
 func safe(err error) {
