@@ -11,6 +11,8 @@ import (
   "time"
 )
 
+const VERSION="v0.0.1"
+
 func main() {
   var interval int
   flag.IntVar(&interval, "i", 1, "interval")
@@ -18,7 +20,15 @@ func main() {
   var interrupt bool
   flag.BoolVar(&interrupt, "x", false, "interrupt")
 
+  var version bool
+  flag.BoolVar(&version, "v", false, "version")
+
   flag.Parse()
+
+  if version {
+    fmt.Println(VERSION)
+    os.Exit(0)
+  }
 
   command := flag.Args()
 
