@@ -1,14 +1,14 @@
 package main
 
 import (
+  "flag"
   "fmt"
   "log"
-  "flag"
   "os"
   "os/exec"
-  "time"
-  "syscall"
   "strings"
+  "syscall"
+  "time"
 )
 
 func main() {
