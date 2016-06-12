@@ -21,12 +21,3 @@ Options:
 
   -h, --help          this help page
 ```
-
-## Internals
-
-`watch` relies on the current path and commands passed in to create a temporary file that will hold
-the desired output. This files are created on `/var/tmp/watches/<id>`.
-
-It will then procedd to clear the screen, print out the new output, and go back to sleep.
-
-Upon termination, the corresponding file will be removed.
