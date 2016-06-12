@@ -14,6 +14,8 @@ Usage: watch [options] cmd
 
 Options:
 
+  -x, --exit          exit if command fails
+
   -i, --interval <n>  interval period with unit, as 1s or 1ms
                       defaults to 1s
 
