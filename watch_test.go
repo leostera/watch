@@ -2,7 +2,6 @@ package main
 
 import(
   "testing"
-  "strings"
 )
 
 func fixtureCmd() string { return "exit" }
@@ -13,15 +12,11 @@ func fixtureCmdSlice(args []string) []string {
   return append( []string { fixtureCmd() }, args...)
 }
 
-func fixtureCmdString(args []string) string {
-  return strings.Join(fixtureCmdSlice(args), " ")
-}
-
 func TestBuildArgs(t *testing.T) {
   args := fixtureArgs()
   cmd := fixtureCmdSlice(args)
   str := buildArgs(cmd)
-  cmd_str := fixtureCmdString(args)
+  cmd_str := buildArgs(cmd)
   if str != cmd_str {
     t.Fatalf("%s should be %s", str, cmd_str)
   }
