@@ -36,6 +36,7 @@ func main() {
   }
 
   loop(intervalToTime(1000*interval), func () {
+    reset()
     status := run(measure(command))
     if(interrupt && status != 0) {
       os.Exit(status)
