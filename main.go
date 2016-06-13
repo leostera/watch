@@ -5,7 +5,6 @@ import (
   "fmt"
   "os"
   "os/exec"
-  "strings"
   "syscall"
   "time"
 )
@@ -37,7 +36,7 @@ func main() {
 
   loop(intervalToTime(1000*interval), func () {
     reset()
-    status := run(measure(command))
+    status := run(command)
     if(interrupt && status != 0) {
       os.Exit(status)
     }
@@ -52,34 +51,24 @@ func reset() {
   run([]string {"clear"})
 }
 
-func measure(command []string) []string {
-  return append([]string {"time"}, command...)
-}
-
-func run(command []string) int {
-  cmd := exec.Command(getShell(), wrapForShell(buildArgs(command))...)
+func makeCmd(bin string, args []string) *exec.Cmd {
+  path, _ := exec.LookPath(bin)
+  cmd := exec.Command(path, args...)
   cmd.Env = os.Environ()
   cmd.Stdout = os.Stdout
   cmd.Stderr = os.Stderr
-  cmd.Run()
+  return cmd
+}
+
+func getExitStatus(cmd *exec.Cmd) int {
   status, _ := cmd.ProcessState.Sys().(syscall.WaitStatus)
   return status.ExitStatus()
 }
 
-func buildArgs(command []string) string {
-  return strings.Join(command, " ")
-}
-
-func wrapForShell(command string) []string {
-  return []string {"-c", fmt.Sprintf("eval %s", command)}
-}
-
-func getShell() string {
-  bin, found := syscall.Getenv("SHELL")
-  if found == false {
-    bin, _ = exec.LookPath("sh")
-  }
-  return bin
+func run(command []string) int {
+  cmd := makeCmd(command[0], command[1:])
+  cmd.Run()
+  return getExitStatus(cmd)
 }
 
 func loop(d time.Duration, fn func()) {

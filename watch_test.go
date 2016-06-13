@@ -4,22 +4,12 @@ import(
   "testing"
 )
 
-func fixtureCmd() string { return "exit" }
-func fixtureArgs() []string { return []string { "0" } }
-func fixtureBadArgs() []string { return []string { "1" } }
+func fixtureCmd() string { return "ls" }
+func fixtureArgs() []string { return []string { "." } }
+func fixtureBadArgs() []string { return []string { "wat" } }
 
 func fixtureCmdSlice(args []string) []string {
   return append( []string { fixtureCmd() }, args...)
-}
-
-func TestBuildArgs(t *testing.T) {
-  args := fixtureArgs()
-  cmd := fixtureCmdSlice(args)
-  str := buildArgs(cmd)
-  cmd_str := buildArgs(cmd)
-  if str != cmd_str {
-    t.Fatalf("%s should be %s", str, cmd_str)
-  }
 }
 
 func TestRunSuccessfully(t *testing.T) {
@@ -31,15 +21,8 @@ func TestRunSuccessfully(t *testing.T) {
 
 func TestRunExit(t *testing.T) {
   err := run(fixtureCmdSlice(fixtureBadArgs()))
-  if err != 1 {
-    t.Fatalf("%s should not be 1", err)
-  }
-}
-
-func BenchmarkBuildArgs(b *testing.B) {
-  cmd := fixtureCmdSlice(fixtureArgs())
-  for n := 0; n < b.N; n++ {
-    buildArgs(cmd)
+  if err != 2 {
+    t.Fatalf("%s should not be 2", err)
   }
 }
 
@@ -54,19 +37,6 @@ func BenchmarkRunExit(b *testing.B) {
   cmd := fixtureCmdSlice(fixtureBadArgs())
   for n := 0; n < b.N; n++ {
     run(cmd)
-  }
-}
-
-func BenchmarkWrapForShell(b *testing.B) {
-  cmd := buildArgs(fixtureCmdSlice(fixtureBadArgs()))
-  for n := 0; n < b.N; n++ {
-    wrapForShell(cmd)
-  }
-}
-
-func BenchmarkGetShell(b *testing.B) {
-  for n := 0; n < b.N; n++ {
-    getShell()
   }
 }
 
