@@ -36,8 +36,7 @@ func main() {
     os.Exit(0)
   }
 
-  loop(intervalToTime(interval), func () {
-    reset()
+  loop(intervalToTime(1000*interval), func () {
     status := run(measure(command))
     if(interrupt && status != 0) {
       os.Exit(status)
@@ -46,7 +45,7 @@ func main() {
 }
 
 func intervalToTime(i float64) time.Duration {
-  return time.Duration(i) * time.Second
+  return time.Duration(i) * time.Millisecond
 }
 
 func reset() {
@@ -102,9 +101,10 @@ func getShell() string {
 }
 
 func loop(d time.Duration, fn func()) {
-  fn()
-  select {
-  case <- time.After(d):
-    loop(d, fn)
+  for {
+    select {
+    case <- time.After(d):
+      fn()
+    }
   }
 }
