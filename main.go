@@ -77,7 +77,7 @@ func buildArgs(command []string) string {
 }
 
 func wrapForShell(command string) []string {
-  return append([]string {"-c"}, fmt.Sprintf("%s; eval %s", sourceFiles(), command))
+  return []string {"-c", fmt.Sprintf("%s; eval %s", sourceFiles(), command)}
 }
 
 func sourceFiles() string {
