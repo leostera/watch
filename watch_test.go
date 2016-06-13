@@ -2,36 +2,40 @@ package main
 
 import(
   "testing"
+  "strings"
 )
 
-func fixtureCmdSlice() []string {
-  return []string { "echo", "hello" }
+func fixtureCmd() string { return "exit" }
+func fixtureArgs() []string { return []string { "0" } }
+func fixtureBadArgs() []string { return []string { "1" } }
+
+func fixtureCmdSlice(args []string) []string {
+  return append( []string { fixtureCmd() }, args...)
 }
 
-func fixtureErrorCmdSlice() []string {
-  return []string { "exit", "1" }
-}
-
-func fixtureCmdString() string {
-  return "echo hello"
+func fixtureCmdString(args []string) string {
+  return strings.Join(fixtureCmdSlice(args), " ")
 }
 
 func TestBuildArgs(t *testing.T) {
-  str := buildArgs(fixtureCmdSlice())
-  if str != fixtureCmdString() {
-    t.Fatalf("%s should be %s", str, fixtureCmdString())
+  args := fixtureArgs()
+  cmd := fixtureCmdSlice(args)
+  str := buildArgs(cmd)
+  cmd_str := fixtureCmdString(args)
+  if str != cmd_str {
+    t.Fatalf("%s should be %s", str, cmd_str)
   }
 }
 
 func TestRunSuccessfully(t *testing.T) {
-  ok := run(fixtureCmdSlice())
+  ok := run(fixtureCmdSlice(fixtureArgs()))
   if ok != 0 {
     t.Fatalf("%s should be 0", ok)
   }
 }
 
 func TestRunExit(t *testing.T) {
-  err := run(fixtureErrorCmdSlice())
+  err := run(fixtureCmdSlice(fixtureBadArgs()))
   if err != 1 {
     t.Fatalf("%s should not be 1", err)
   }
