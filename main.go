@@ -46,7 +46,7 @@ func main() {
   interval := parseInterval(i)
 
   loop(intervalToTime(interval), func () {
-    //reset()
+    reset()
     status := run(command)
     if(interrupt && status != 0) {
       die(status, "")

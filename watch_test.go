@@ -4,12 +4,48 @@ import(
   "testing"
 )
 
-func fixtureCmd() string { return "ls" }
-func fixtureArgs() []string { return []string { "." } }
-func fixtureBadArgs() []string { return []string { "wat" } }
+/******************************************************************************/
+// Fixtures
+/******************************************************************************/
+
+func fixtureCmd() string { return "sh" }
+func fixtureArgs() []string { return []string { "-c", "exit 0" } }
+func fixtureBadArgs() []string { return []string { "-c", "exit 2"} }
 
 func fixtureCmdSlice(args []string) []string {
   return append( []string { fixtureCmd() }, args...)
+}
+
+/******************************************************************************/
+// Tests
+/******************************************************************************/
+
+func TestSuffixToInterval1MS(t *testing.T) {
+  val, _ := suffixToInterval("MS", "1MS")
+  if val != 1 {
+    t.Fatalf("%s should be 1", val)
+  }
+}
+
+func TestSuffixToInterval1ms(t *testing.T) {
+  val, _ := suffixToInterval("ms", "1ms")
+  if val != 1 {
+    t.Fatalf("%s should be 1", val)
+  }
+}
+
+func TestSuffixToInterval1S(t *testing.T) {
+  val, _ := suffixToInterval("S", "1S")
+  if val != 1000.0 {
+    t.Fatalf("%s should be 100.0", val)
+  }
+}
+
+func TestSuffixToInterval1s(t *testing.T) {
+  val, _ := suffixToInterval("s", "1s")
+  if val != 1000.0 {
+    t.Fatalf("%s should be 1000.0", val)
+  }
 }
 
 func TestRunSuccessfully(t *testing.T) {
@@ -25,6 +61,11 @@ func TestRunExit(t *testing.T) {
     t.Fatalf("%s should not be 2", err)
   }
 }
+
+
+/******************************************************************************/
+// Benchmarks
+/******************************************************************************/
 
 func BenchmarkRunSuccessfully(b *testing.B) {
   cmd := fixtureCmdSlice(fixtureArgs())
@@ -43,5 +84,11 @@ func BenchmarkRunExit(b *testing.B) {
 func BenchmarkIntervalToTime(b *testing.B) {
   for n := 0; n < b.N; n++ {
     intervalToTime(1)
+  }
+}
+
+func BenchmarkSuffixToInterval(b *testing.B) {
+  for n := 0; n < b.N; n++ {
+    suffixToInterval("MS", "1MS")
   }
 }
