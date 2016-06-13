@@ -1,5 +1,5 @@
 # watch [![Travis-CI](https://api.travis-ci.org/ostera/watch.svg)](https://travis-ci.org/ostera/watch)
-> ⌚ A Go alternative to GNU's watch – very useful for autorunning things!
+> ⌚ A portable Go alternative to GNU's watch – very useful for autorunning things!
 
 ## Installation
 
@@ -10,16 +10,17 @@ brew install ostera-watch
 ## Usage
 
 ```
-Usage: watch [options] cmd
+~ λ watch
 
-Options:
+   Usage: watch [options] <cmd>
 
-  -x, --exit          exit if command fails
+   Sample: watch -i=100ms make
 
-  -i, --interval <n>  interval period with unit, as 1s or 1ms
-                      defaults to 1s
+   Options:
 
-  -v, --version       outputs version number
+     -i, --interval             interval in seconds or ms, defaulting to 1s
+     -x, --exit                 exit on failure
+     -v, --version              print out version
+     -h, --help                 this help page
 
-  -h, --help          this help page
 ```
