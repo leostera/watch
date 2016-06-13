@@ -66,12 +66,6 @@ func run(command []string) int {
   return status.ExitStatus()
 }
 
-func safe(err error) {
-  if err != nil {
-    log.Fatal(err)
-  }
-}
-
 func buildArgs(command []string) string {
   return strings.Join(command, " ")
 }
