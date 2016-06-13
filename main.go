@@ -70,19 +70,7 @@ func buildArgs(command []string) string {
 }
 
 func wrapForShell(command string) []string {
-  return []string {"-c", fmt.Sprintf("%s; eval %s", sourceFiles(), command)}
-}
-
-func sourceFiles() string {
-  return fmt.Sprintf("%s %s", getShellSourceCmd(), getSourceFilePath())
-}
-
-func getSourceFilePath() string {
-  return "~/.zshrc"
-}
-
-func getShellSourceCmd() string {
-  return "."
+  return []string {"-c", fmt.Sprintf("eval %s", command)}
 }
 
 func getShell() string {
