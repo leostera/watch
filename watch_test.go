@@ -40,3 +40,15 @@ func TestRunExit(t *testing.T) {
     t.Fatalf("%s should not be 1", err)
   }
 }
+
+func BenchmarkRunSuccessfully(b *testing.B) {
+  for n := 0; n < b.N; n++ {
+    run(fixtureCmdSlice(fixtureArgs()))
+  }
+}
+
+func BenchmarkRunExit(b *testing.B) {
+  for n := 0; n < b.N; n++ {
+    run(fixtureCmdSlice(fixtureBadArgs()))
+  }
+}
