@@ -2,7 +2,10 @@
 
 GO = $(shell which go)
 
-all: build test
+all: build test benchmark
+
+benchmark:
+	$(GO) test -bench .
 
 build:
 	$(GO) build
