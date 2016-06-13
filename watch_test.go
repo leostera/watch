@@ -56,3 +56,22 @@ func BenchmarkRunExit(b *testing.B) {
     run(cmd)
   }
 }
+
+func BenchmarkWrapForShell(b *testing.B) {
+  cmd := buildArgs(fixtureCmdSlice(fixtureBadArgs()))
+  for n := 0; n < b.N; n++ {
+    wrapForShell(cmd)
+  }
+}
+
+func BenchmarkGetShell(b *testing.B) {
+  for n := 0; n < b.N; n++ {
+    getShell()
+  }
+}
+
+func BenchmarkIntervalToTime(b *testing.B) {
+  for n := 0; n < b.N; n++ {
+    intervalToTime(1)
+  }
+}
