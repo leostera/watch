@@ -94,10 +94,8 @@ func getShell() string {
 }
 
 func loop(d time.Duration, fn func()) {
-  for {
-    select {
-    case <- time.After(d):
-      fn()
-    }
+  fn()
+  for range time.Tick(d) {
+    fn()
   }
 }
