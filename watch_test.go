@@ -36,6 +36,13 @@ func TestRunExit(t *testing.T) {
   }
 }
 
+func BenchmarkBuildArgs(b *testing.B) {
+  cmd := fixtureCmdSlice(fixtureArgs())
+  for n := 0; n < b.N; n++ {
+    buildArgs(cmd)
+  }
+}
+
 func BenchmarkRunSuccessfully(b *testing.B) {
   cmd := fixtureCmdSlice(fixtureArgs())
   for n := 0; n < b.N; n++ {
