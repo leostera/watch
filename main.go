@@ -43,6 +43,10 @@ func main() {
     die(0, "")
   }
 
+  if ! commandExists(command) {
+    die(0, "Executable not found in PATH")
+  }
+
   interval := parseInterval(i)
 
   loop(intervalToTime(interval), func () {
