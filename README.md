@@ -4,7 +4,8 @@
 ## Installation
 
 ```
-brew install go-watch
+brew tap ostera/homebrew-core
+brew install ostera/core/go-watch
 ```
 
 From source just run `make` and put the `watch` executable somewhere handy.
