@@ -93,23 +93,20 @@ func parseInterval(i string) float64 {
 }
 
 func help() {
-	br := func() { fmt.Println("") }
-	_p := func(p string, t string) { fmt.Println(p, t) }
-	p := func(t string) { _p("  ", t) }
-	pp := func(t string) { _p("    ", t) }
+	s := `
+   Usage: watch [options] <cmd>
 
-	br()
-	p("Usage: watch [options] <cmd>")
-	br()
-	p("Sample: watch -i=100ms make")
-	br()
-	p("Options:")
-	br()
-	pp("-i, --interval\t\tinterval in seconds or ms, defaulting to 1s")
-	pp("-x, --exit\t\t\texit on failure")
-	pp("-v, --version\t\tprint out version")
-	pp("-h, --help\t\t\tthis help page")
-	br()
+   Sample: watch -i=100ms make
+
+   Options:
+
+     -i, --interval             interval in seconds or ms, defaulting to 1s
+     -x, --exit                 exit on failure
+     -v, --version              print out version
+     -h, --help                 this help page
+
+`
+	fmt.Print(s)
 }
 
 func dieIf(err error, status int, message string) {
