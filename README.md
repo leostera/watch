@@ -36,10 +36,9 @@ The main pain point was re-running tests/builds, choosing to clear the screen or
 and having UNICODE/Emoji support.
 
 I started off using OS X's watch, and eventually moving to GNU's watch. Unfortunately
-neither have sub-second resolution, so I ended up moving to Visionmedia's watch.
+neither has sub-second resolution, nor work with Emojis.
 
-Now comparing them all, while Visionmedia's has millisecond resolution, it doesn't clear
-the screen - GNU's watch does, and has a cool diff flag that I don't really use.
+So I ended up moving to Visionmedia's watch. Now this last one doesn't clear the screen.
 
 The middleground was a small, poor-man's watch, written in a few lines of bash:
 
