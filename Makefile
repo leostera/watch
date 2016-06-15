@@ -15,7 +15,7 @@ benchmark:
 	$(GO) test -bench .
 
 build:
-	$(GO) build
+	$(GO) build -o ./watch
 
 test:
 	$(GO) test
