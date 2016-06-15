@@ -58,10 +58,15 @@ func main() {
 			reset()
 		}
 		status := run(command)
+		printStatus(status)
 		if interrupt && status != 0 {
 			die(status, "")
 		}
 	})
+}
+
+func printStatus(s int) {
+	fmt.Printf("\033[90mexit: %d\033[0m\n\n", s)
 }
 
 func intervalSuffixes() []string {
