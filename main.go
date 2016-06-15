@@ -15,20 +15,20 @@ const VERSION = "v0.0.1"
 
 func main() {
 	var i string
-	flag.StringVar(&i, "i", "1s", "Interval to wait between executions in seconds")
-	flag.StringVar(&i, "interval", "1s", "Interval to wait between executions in seconds")
+	flag.StringVar(&i, "i", "1s", "")
+	flag.StringVar(&i, "interval", "1s", "")
 
 	var interrupt bool
-	flag.BoolVar(&interrupt, "x", false, "Exit and elevate status code if the command fails")
-	flag.BoolVar(&interrupt, "exit", false, "Exit and elevate status code if the command fails")
+	flag.BoolVar(&interrupt, "x", false, "")
+	flag.BoolVar(&interrupt, "exit", false, "")
 
 	var version bool
-	flag.BoolVar(&version, "v", false, "Print out version")
-	flag.BoolVar(&version, "version", false, "Print out version")
+	flag.BoolVar(&version, "v", false, "")
+	flag.BoolVar(&version, "version", false, "")
 
 	var usage bool
-	flag.BoolVar(&usage, "h", false, "Print out version")
-	flag.BoolVar(&usage, "help", false, "Print out version")
+	flag.BoolVar(&usage, "h", false, "")
+	flag.BoolVar(&usage, "help", false, "")
 
 	flag.Parse()
 
