@@ -66,7 +66,7 @@ func unitToFactor(s string) float64 {
 	if s == "ms" || s == "MS" {
 		return 1.0
 	}
-	if s == "S" || s == "S" {
+	if s == "s" || s == "S" {
 		return 1000.0
 	}
 	return 1000.0

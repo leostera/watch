@@ -23,42 +23,42 @@ func fixtureCmdSlice(args []string) []string {
 func TestSuffixToInterval1MS(t *testing.T) {
 	val, _ := suffixToInterval("MS", "1MS")
 	if val != 1 {
-		t.Fatalf("%s should be 1", val)
+		t.Fatalf("%f should be 1", val)
 	}
 }
 
 func TestSuffixToInterval1ms(t *testing.T) {
 	val, _ := suffixToInterval("ms", "1ms")
 	if val != 1 {
-		t.Fatalf("%s should be 1", val)
+		t.Fatalf("%f should be 1", val)
 	}
 }
 
 func TestSuffixToInterval1S(t *testing.T) {
 	val, _ := suffixToInterval("S", "1S")
 	if val != 1000.0 {
-		t.Fatalf("%s should be 100.0", val)
+		t.Fatalf("%f should be 100.0", val)
 	}
 }
 
 func TestSuffixToInterval1s(t *testing.T) {
 	val, _ := suffixToInterval("s", "1s")
 	if val != 1000.0 {
-		t.Fatalf("%s should be 1000.0", val)
+		t.Fatalf("%f should be 1000.0", val)
 	}
 }
 
 func TestRunSuccessfully(t *testing.T) {
 	ok := run(fixtureCmdSlice(fixtureArgs()))
 	if ok != 0 {
-		t.Fatalf("%s should be 0", ok)
+		t.Fatalf("%d should be 0", ok)
 	}
 }
 
 func TestRunExit(t *testing.T) {
 	err := run(fixtureCmdSlice(fixtureBadArgs()))
 	if err != 2 {
-		t.Fatalf("%s should not be 2", err)
+		t.Fatalf("%d should not be 2", err)
 	}
 }
 
