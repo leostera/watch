@@ -2,7 +2,13 @@
 
 GO = $(shell which go)
 
-all: build test benchmark
+all: vet format build test benchmark
+
+vet:
+	$(GO) vet
+
+format:
+	$(GO) fmt
 
 benchmark:
 	$(GO) test -bench .
