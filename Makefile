@@ -1,5 +1,6 @@
 .PHONY: all test build
 
+PREFIX ?= /usr/local
 GO = $(shell which go)
 
 all: vet format build test benchmark
@@ -21,3 +22,9 @@ build: version
 
 test:
 	$(GO) test
+
+install: build
+	install watch $(PREFIX)/bin/watch
+
+uninstall:
+	rm -rf $(PREFIX)/bin/watch
