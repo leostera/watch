@@ -19,10 +19,6 @@ func die(status int, message string) {
 	os.Exit(status)
 }
 
-func intervalToTime(i float64) time.Duration {
-	return time.Duration(i) * time.Millisecond
-}
-
 func loop(d time.Duration, fn func()) {
 	fn()
 	for range time.Tick(d) {
