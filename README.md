@@ -48,4 +48,5 @@ BenchmarkRunExit-4                   300           4388672 ns/op
 BenchmarkIntervalToTime-4       2000000000               0.70 ns/op
 BenchmarkSuffixToInterval-4     50000000                42.1 ns/op
 ok      _/Users/leostera/repos/watch    8.128s
+exit: 0
 ```
