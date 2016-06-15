@@ -13,7 +13,10 @@ format:
 benchmark:
 	$(GO) test -bench .
 
-build:
+version:
+	sed -i 's =.* =\ "$(shell git describe)" ' version.go
+
+build: version
 	$(GO) build
 
 test:

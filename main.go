@@ -6,8 +6,6 @@ import (
 	"time"
 )
 
-const VERSION = "v0.1.1"
-
 func main() {
 	var i string
 	flag.StringVar(&i, "i", "1s", "")
