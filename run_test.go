@@ -32,37 +32,7 @@ func fixtureCmdSlice(args []string) []string {
 	return append([]string{fixtureCmd()}, args...)
 }
 
-/******************************************************************************/
 // Tests
-/******************************************************************************/
-
-func TestSuffixToInterval1MS(t *testing.T) {
-	val, _ := suffixToInterval("MS", "1MS")
-	if val != 1 {
-		t.Fatalf("%f should be 1", val)
-	}
-}
-
-func TestSuffixToInterval1ms(t *testing.T) {
-	val, _ := suffixToInterval("ms", "1ms")
-	if val != 1 {
-		t.Fatalf("%f should be 1", val)
-	}
-}
-
-func TestSuffixToInterval1S(t *testing.T) {
-	val, _ := suffixToInterval("S", "1S")
-	if val != 1000.0 {
-		t.Fatalf("%f should be 100.0", val)
-	}
-}
-
-func TestSuffixToInterval1s(t *testing.T) {
-	val, _ := suffixToInterval("s", "1s")
-	if val != 1000.0 {
-		t.Fatalf("%f should be 1000.0", val)
-	}
-}
 
 func TestRunSuccessfully(t *testing.T) {
 	ok := run(fixtureCmdSlice(fixtureArgs()))
@@ -78,9 +48,7 @@ func TestRunExit(t *testing.T) {
 	}
 }
 
-/******************************************************************************/
 // Benchmarks
-/******************************************************************************/
 
 func BenchmarkRunSuccessfully(b *testing.B) {
 	cmd := fixtureCmdSlice(fixtureArgs())
@@ -93,17 +61,5 @@ func BenchmarkRunExit(b *testing.B) {
 	cmd := fixtureCmdSlice(fixtureBadArgs())
 	for n := 0; n < b.N; n++ {
 		run(cmd)
-	}
-}
-
-func BenchmarkIntervalToTime(b *testing.B) {
-	for n := 0; n < b.N; n++ {
-		intervalToTime(1)
-	}
-}
-
-func BenchmarkSuffixToInterval(b *testing.B) {
-	for n := 0; n < b.N; n++ {
-		suffixToInterval("MS", "1MS")
 	}
 }
