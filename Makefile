@@ -2,6 +2,7 @@
 
 PREFIX ?= /usr/local
 GO = $(shell which go)
+SED = $(shell which sed)
 
 all: vet format build test benchmark
 
@@ -15,7 +16,7 @@ benchmark:
 	$(GO) test -bench .
 
 version:
-	sed -i 's =.* =\ "$(shell git describe)" ' version.go
+	$(SED) -i'' 's =.* =\ "$(shell git describe)" ' version.go
 
 build: version
 	$(GO) build
@@ -24,7 +25,7 @@ test:
 	$(GO) test
 
 install: build
-	install watch $(PREFIX)/bin/watch
+	install ./watch $(PREFIX)/bin/watch
 
 uninstall:
 	rm -rf $(PREFIX)/bin/watch
