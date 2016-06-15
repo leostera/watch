@@ -1,16 +1,32 @@
 package main
 
 import (
+	"runtime"
 	"testing"
 )
+
+var platform struct {
+	cmd  string
+	flag string
+}
+
+func init() {
+	if runtime.GOOS == "windows" {
+		platform.cmd = "cmd"
+		platform.flag = "/C"
+	} else {
+		platform.cmd = "sh"
+		platform.flag = "-c"
+	}
+}
 
 /******************************************************************************/
 // Fixtures
 /******************************************************************************/
 
-func fixtureCmd() string       { return "sh" }
-func fixtureArgs() []string    { return []string{"-c", "exit 0"} }
-func fixtureBadArgs() []string { return []string{"-c", "exit 2"} }
+func fixtureCmd() string       { return platform.cmd }
+func fixtureArgs() []string    { return []string{platform.flag, "exit 0"} }
+func fixtureBadArgs() []string { return []string{platform.flag, "exit 2"} }
 
 func fixtureCmdSlice(args []string) []string {
 	return append([]string{fixtureCmd()}, args...)

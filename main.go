@@ -140,20 +140,27 @@ func intervalToTime(i float64) time.Duration {
 }
 
 func reset() {
-	run([]string{"clear"})
+	run([]string{CLEAR_CMD})
 }
 
-func makeCmd(bin string, args []string) *exec.Cmd {
-	cmd := exec.Command(bin, args...)
+func makeCmd(command []string) *exec.Cmd {
+	cmd := makeCoreCmd(command)
 	cmd.Env = os.Environ()
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	return cmd
 }
 
-func getExitStatus(cmd *exec.Cmd) int {
-	status, _ := cmd.ProcessState.Sys().(syscall.WaitStatus)
-	return status.ExitStatus()
+func getExitStatus(err error) int {
+	if err == nil {
+		return 0
+	}
+	if exitErr, ok := err.(*exec.ExitError); ok {
+		if s, ok := exitErr.ProcessState.Sys().(syscall.WaitStatus); ok {
+			return s.ExitStatus()
+		}
+	}
+	return -1
 }
 
 func commandExists(command []string) bool {
@@ -162,10 +169,8 @@ func commandExists(command []string) bool {
 }
 
 func run(command []string) int {
-	path, _ := exec.LookPath(command[0])
-	cmd := makeCmd(path, command[1:])
-	cmd.Run()
-	return getExitStatus(cmd)
+	cmd := makeCmd(command)
+	return getExitStatus(cmd.Run())
 }
 
 func loop(d time.Duration, fn func()) {
