@@ -22,6 +22,10 @@ func main() {
 	flag.BoolVar(&interrupt, "x", false, "")
 	flag.BoolVar(&interrupt, "exit", false, "")
 
+	var clear bool
+	flag.BoolVar(&clear, "c", false, "")
+	flag.BoolVar(&clear, "clear", false, "")
+
 	var version bool
 	flag.BoolVar(&version, "v", false, "")
 	flag.BoolVar(&version, "version", false, "")
@@ -50,7 +54,9 @@ func main() {
 	interval := parseInterval(i)
 
 	loop(intervalToTime(interval), func() {
-		reset()
+		if clear {
+			reset()
+		}
 		status := run(command)
 		if interrupt && status != 0 {
 			die(status, "")
@@ -100,10 +106,12 @@ func help() {
 
    Options:
 
+     -c, --clear                clear screen between command runs
      -i, --interval             interval in seconds or ms, defaulting to 1s
      -x, --exit                 exit on failure
-     -v, --version              print out version
+
      -h, --help                 this help page
+     -v, --version              print out version
 
 `
 	fmt.Print(s)
