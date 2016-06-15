@@ -20,10 +20,12 @@ From source just run `make` and put the `watch` executable somewhere handy.
 
    Options:
 
+     -c, --clear                clear screen between command runs
      -i, --interval             interval in seconds or ms, defaulting to 1s
      -x, --exit                 exit on failure
-     -v, --version              print out version
+
      -h, --help                 this help page
+     -v, --version              print out version
 
 ```
 
