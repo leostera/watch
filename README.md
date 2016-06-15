@@ -30,6 +30,34 @@ From source just run `make` and put the `watch` executable somewhere handy.
 
 ```
 
+## Motivation
+
+The main pain point was re-running tests/builds, choosing to clear the screen or not,
+and having UNICODE/Emoji support.
+
+I started off using OS X's watch, and eventually moving to GNU's watch. Unfortunately
+neither have sub-second resolution, so I ended up moving to Visionmedia's watch.
+
+Now comparing them all, while Visionmedia's has millisecond resolution, it doesn't clear
+the screen - GNU's watch does, and has a cool diff flag that I don't really use.
+
+The middleground was a small, poor-man's watch, written in a few lines of bash:
+
+```bash
+function ww {
+  readonly OUTPUT_FILE="/var/tmp/ww_files/$(pwd | sed 's / _ g')-$1"
+  while true; do
+    eval $* > $OUTPUT_FILE;
+    clear;
+    cat $OUTPUT_FILE;
+    sleep 1;
+  done
+}
+```
+
+Hacky, but it worked pretty well! Now it was about time I wrote it in a way that
+was easy to install, share, test, port, and contribute to :)
+
 ## Contributing
 
 Build once, then use `./watch` to continuously build itself:
