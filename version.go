@@ -1,3 +1,4 @@
 package main
 
-const VERSION = "0.3.1"
+// Version is the current version of watch
+const Version = "0.3.1"

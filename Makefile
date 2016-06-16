@@ -14,7 +14,6 @@ setup:
 lint:
 	$(shell echo $$GOPATH/bin/gometalinter) @.gometalinter
 	$(GO) vet
-	$(GO) fmt
 
 benchmark:
 	$(GO) test -bench .

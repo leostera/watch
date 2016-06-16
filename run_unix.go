@@ -6,7 +6,8 @@ import (
 	"os/exec"
 )
 
-const CLEAR_CMD = "clear"
+// ClearCmd is the command used to clean the terminal
+const ClearCmd = "clear"
 
 func _makeCmd(command []string) *exec.Cmd {
 	path, _ := exec.LookPath(command[0])
