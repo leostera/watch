@@ -4,6 +4,8 @@
 ## Installation
 
 ```
+go get github.com/ostera/watch
+
 brew install https://raw.githubusercontent.com/ostera/homebrew-core/master/Formula/go-watch.rb
 ```
 
