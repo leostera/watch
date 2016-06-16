@@ -12,7 +12,7 @@ setup:
 	$(shell echo $$GOPATH/bin/gometalinter) --install
 
 lint:
-	$(shell echo $$GOPATH/bin/gometalinter)
+	$(shell echo $$GOPATH/bin/gometalinter) @.gometalinter
 	$(GO) vet
 	$(GO) fmt
 

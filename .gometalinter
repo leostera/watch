@@ -1,0 +1,1 @@
+--disable=unconvert,aligncheck,gosimple,golint,gotype,lll,errcheck,varcheck,structcheck,interfacer,staticcheck
