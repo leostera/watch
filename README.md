@@ -64,16 +64,14 @@ Build once, then use `./watch` to continuously build itself:
 repos/watch λ ./watch make
 /usr/local/bin/go vet
 /usr/local/bin/go fmt
-/usr/local/bin/go build
+/usr/local/bin/go build -o ./watch
 /usr/local/bin/go test
 PASS
-ok      _/Users/leostera/repos/watch    0.015s
+ok      _/Users/leostera/repos/watch    0.013s
 /usr/local/bin/go test -bench .
 PASS
-BenchmarkRunSuccessfully-4           300           4697357 ns/op
-BenchmarkRunExit-4                   300           4388672 ns/op
-BenchmarkIntervalToTime-4       2000000000               0.70 ns/op
-BenchmarkSuffixToInterval-4     50000000                42.1 ns/op
-ok      _/Users/leostera/repos/watch    8.128s
+BenchmarkRunSuccessfully-4           500           3335180 ns/op
+BenchmarkRunExit-4                   500           3356888 ns/op
+ok      _/Users/leostera/repos/watch    4.028s
 exit: 0
 ```
