@@ -3,12 +3,17 @@
 PREFIX ?= /usr/local
 GO = $(shell which go)
 
-all: vet format build test benchmark
+all: lint build test benchmark
 
-vet:
+ci: setup all
+
+setup:
+	go get -u github.com/alecthomas/gometalinter
+	$(shell echo $$GOPATH/bin/gometalinter) --install
+
+lint:
+	$(shell echo $$GOPATH/bin/gometalinter)
 	$(GO) vet
-
-format:
 	$(GO) fmt
 
 benchmark:
