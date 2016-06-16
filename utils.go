@@ -6,12 +6,6 @@ import (
 	"time"
 )
 
-func dieIf(err error, status int, message string) {
-	if err != nil {
-		die(status, message)
-	}
-}
-
 func die(status int, message string) {
 	if len(message) > 0 {
 		fmt.Println(message)

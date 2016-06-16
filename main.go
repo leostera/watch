@@ -30,7 +30,7 @@ func main() {
 	flag.Parse()
 
 	if version {
-		die(0, VERSION)
+		die(0, Version)
 	}
 
 	command := flag.Args()

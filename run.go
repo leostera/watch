@@ -8,7 +8,7 @@ import (
 )
 
 func reset() {
-	run([]string{CLEAR_CMD})
+	run([]string{ClearCmd})
 }
 
 func printStatus(s int) {
