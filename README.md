@@ -76,4 +76,9 @@ BenchmarkRunSuccessfully-4           500           3335180 ns/op
 BenchmarkRunExit-4                   500           3356888 ns/op
 ok      _/Users/leostera/repos/watch    4.028s
 exit: 0
+
+/usr/local/bin/go vet
+/usr/local/bin/go fmt
+/usr/local/bin/go build -o ./watch
+# ...output continues here!
 ```
