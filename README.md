@@ -4,8 +4,7 @@
 ## Installation
 
 ```
-brew tap ostera/homebrew-core
-brew install ostera/core/go-watch
+brew install https://raw.githubusercontent.com/ostera/homebrew-core/master/Formula/go-watch.rb
 ```
 
 From source just run `make` and put the `watch` executable somewhere handy.
