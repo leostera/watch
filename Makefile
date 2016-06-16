@@ -1,4 +1,4 @@
-.PHONY: all test build
+.PHONY: all ci setup lint benchmark build test install uninstall
 
 PREFIX ?= /usr/local
 GO = $(shell which go)
