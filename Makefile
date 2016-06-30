@@ -3,7 +3,7 @@
 PREFIX ?= /usr/local
 GO = $(shell which go)
 VERSION="$(shell git describe HEAD)"
-NAME=watch
+NAME=$(shell basename $(shell pwd))
 
 all: lint build test benchmark
 
@@ -31,7 +31,7 @@ test:
 	$(GO) test
 
 install: build
-	install watch $(PREFIX)/bin/watch
+	install $(NAME) $(PREFIX)/bin/$(NAME)
 
 uninstall:
-	rm -rf $(PREFIX)/bin/watch
+	rm -rf $(PREFIX)/bin/$(NAME)
