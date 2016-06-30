@@ -1,14 +1,23 @@
-#!/bin/sh
+#!/bin/bash -e
 
-mkdir -p ./dist
+readonly DIST=./dist
+readonly NAME="$(basename $(pwd))"
+readonly VERSION="$(git describe --tags $1)"
 
+cleanup () {
+  rm -rf ${DIST}
+}
+trap cleanup ERR
+
+mkdir -p ${DIST}
+
+echo "Building v${VERSION}:"
 for OS in "freebsd" "linux" "darwin" "windows"; do
   for ARCH in "386" "amd64"; do
-    VERSION="$(git describe --tags $1)"
-    echo "Building v${VERSION} for ${OS}.${ARCH}..."
-    GOOS=$OS CGO_ENABLED=0 GOARCH=$ARCH go build -ldflags "-X main.Version=$VERSION" -o watch
-    ARCHIVE="watch-$VERSION-$OS-$ARCH.tar.gz"
-    tar -czf ./dist/$ARCHIVE watch
-    echo $ARCHIVE
+    echo -n "-> ${OS}.${ARCH}..."
+    CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -ldflags "-X main.Version=${VERSION}" -o ${NAME}
+    ARCHIVE="${NAME}-${VERSION}-${OS}-${ARCH}.tar.gz"
+    tar -czf ${DIST}/${ARCHIVE} ${NAME}
+    echo ✔︎
   done
 done
