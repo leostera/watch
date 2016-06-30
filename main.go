@@ -8,36 +8,39 @@ import (
 )
 
 // Version string prefilled at build time
-var Version string
+var (
+	Version string
+
+	clear     bool
+	i         string
+	interrupt bool
+	usage     bool
+	version   bool
+)
 
 func main() {
-	var i string
 	flag.StringVar(&i, "i", "1s", "")
 	flag.StringVar(&i, "interval", "1s", "")
 
-	var interrupt bool
 	flag.BoolVar(&interrupt, "x", false, "")
 	flag.BoolVar(&interrupt, "exit", false, "")
 
-	var clear bool
 	flag.BoolVar(&clear, "c", false, "")
 	flag.BoolVar(&clear, "clear", false, "")
 
-	var version bool
 	flag.BoolVar(&version, "v", false, "")
 	flag.BoolVar(&version, "version", false, "")
 
-	var usage bool
 	flag.BoolVar(&usage, "h", false, "")
 	flag.BoolVar(&usage, "help", false, "")
 
 	flag.Parse()
 
+	command := flag.Args()
+
 	if version {
 		omg.Die(0, Version)
 	}
-
-	command := flag.Args()
 
 	if usage || len(command) == 0 {
 		help()
