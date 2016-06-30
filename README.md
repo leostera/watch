@@ -3,6 +3,10 @@
 
 ## Installation
 
+Get your preferred binary flavour from the [releases page](https://github.com/ostera/watch/releases).
+
+Or if you have a go environment:
+
 ```
 go get github.com/ostera/watch
 
