@@ -9,6 +9,7 @@ all: lint build test benchmark
 ci: setup all
 
 setup:
+	go get -u github.com/ostera/oh-my-gosh/lib
 	go get -u github.com/alecthomas/gometalinter
 	$(shell echo $$GOPATH/bin/gometalinter) --install
 

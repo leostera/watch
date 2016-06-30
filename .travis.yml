@@ -7,3 +7,4 @@ go:
 
 script:
   - make ci
+
