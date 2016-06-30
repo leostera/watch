@@ -3,8 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	omg "github.com/ostera/oh-my-gosh/lib"
 	"time"
 )
+
+// Version string prefilled at build time
+var Version string
 
 func main() {
 	var i string
@@ -30,33 +34,33 @@ func main() {
 	flag.Parse()
 
 	if version {
-		die(0, Version)
+		omg.Die(0, Version)
 	}
 
 	command := flag.Args()
 
 	if usage || len(command) == 0 {
 		help()
-		die(0, "")
+		omg.Die(0, "")
 	}
 
-	if !commandExists(command) {
-		die(0, "Executable not found in PATH")
+	if !omg.CommandExists(command) {
+		omg.Die(0, "Executable not found in PATH")
 	}
 
 	interval, err := time.ParseDuration(i)
 	if err != nil {
-		die(0, "Invalid interval: try 1s, 1ms, 2h45m2s")
+		omg.Die(0, "Invalid interval: try 1s, 1ms, 2h45m2s")
 	}
 
 	loop(interval, func() {
 		if clear {
-			reset()
+			omg.Reset()
 		}
-		status := run(command)
-		printStatus(status)
+		status := omg.Run(command)
+		omg.PrintStatus(status)
 		if interrupt && status != 0 {
-			die(status, "")
+			omg.Die(status, "")
 		}
 	})
 }
@@ -78,4 +82,11 @@ func help() {
 
 `
 	fmt.Print(s)
+}
+
+func loop(d time.Duration, fn func()) {
+	fn()
+	for range time.Tick(d) {
+		fn()
+	}
 }

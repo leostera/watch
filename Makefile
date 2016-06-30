@@ -2,6 +2,7 @@
 
 PREFIX ?= /usr/local
 GO = $(shell which go)
+VERSION="$(shell git describe HEAD)"
 
 all: lint build test benchmark
 
@@ -19,7 +20,7 @@ benchmark:
 	$(GO) test -bench .
 
 build:
-	$(GO) build -o ./watch
+	$(GO) build --ldflags "-X main.Version=$(VERSION)" -o ./watch
 
 test:
 	$(GO) test
