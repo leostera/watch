@@ -1,5 +1,5 @@
 # watch [![Travis-CI](https://api.travis-ci.org/ostera/watch.svg)](https://travis-ci.org/ostera/watch)
-> ⌚ A portable Go alternative to GNU's watch – very useful for autorunning things!
+⌚ A portable Go alternative to GNU's watch – very useful for autorunning things!
 
 ## Installation
 
@@ -86,3 +86,11 @@ exit: 0
 /usr/local/bin/go build -o ./watch
 # ...output continues here!
 ```
+
+## Next Steps
+
+See the [issues page](https://github.com/ostera/watch/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement) for a list of planned enhancements and features.
+
+## License
+
+See [LICENSE](https://github.com/ostera/watch/blob/master/LICENSE).
